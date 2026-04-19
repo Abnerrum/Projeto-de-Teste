@@ -1,91 +1,137 @@
-# 🌤️ Clima Now — v2.0
+# 🌤️ Clima Now
 
-Web App de previsão do tempo com **mapa interativo de chuva**, interface redesenhada e código organizado por camadas.
+Aplicação web de previsão do tempo em tempo real, desenvolvida com **FastAPI** e **Python**.  
+Busque qualquer cidade do mundo e visualize temperatura, previsão dos próximos 7 dias e um mapa interativo de chuva por região.
 
-## 📁 Estrutura do Projeto
+---
 
-```
+## 🚀 Tecnologias utilizadas
+
+- **FastAPI** — framework web moderno e assíncrono
+- **Uvicorn** — servidor ASGI de alta performance
+- **HTTPX** — requisições HTTP assíncronas
+- **Jinja2** — renderização de templates HTML
+- **Leaflet.js** — mapa interativo no frontend
+- **Open-Meteo API** — dados climáticos gratuitos, sem necessidade de cadastro
+
+---
+
+## 📁 Estrutura do projeto
 weather_app_v2/
-├── main.py                    # Entry point FastAPI
-├── requirements.txt
+├── main.py                      # Ponto de entrada da aplicação
+├── requirements.txt             # Dependências do projeto
+├── README.md                    # Documentação
 ├── routers/
-│   ├── __init__.py
-│   └── weather.py             # Rotas HTTP (GET /, /weather, /api/weather)
+│   └── weather.py               # Rotas HTTP da aplicação
 ├── services/
-│   ├── __init__.py
-│   └── weather_service.py     # Lógica de negócio (geocoding, clima, regiões)
+│   └── weather_service.py       # Lógica de negócio e integração com APIs
 ├── templates/
-│   └── index.html             # Interface completa com Leaflet map
-└── static/                    # (pasta para futuros assets)
-```
+│   └── index.html               # Interface web completa
+└── static/                      # Arquivos estáticos (CSS, JS futuros)
+---
 
-## 🚀 Como rodar
+## ⚙️ Como executar o projeto
 
+### Pré-requisitos
+- Python 3.10 ou superior instalado
+- Terminal (PowerShell, CMD ou Bash)
+
+### Passo a passo
+
+**1. Entre na pasta do projeto:**
 ```bash
-# 1. Crie e ative o ambiente virtual
-python -m venv venv
-source venv/bin/activate        # Linux/Mac
-venv\Scripts\activate           # Windows
-
-# 2. Instale as dependências
-pip install -r requirements.txt
-
-# 3. Inicie o servidor
-uvicorn main:app --reload
-
-# 4. Acesse
-http://localhost:8000
+cd weather_app_v2
 ```
 
-## ✨ O que há de novo na v2.0
+**2. Crie o ambiente virtual:**
+```bash
+python -m venv venv
+```
 
-### Interface
-- Design completamente renovado com tema escuro refinado
-- Tipografia com DM Serif Display + DM Sans
-- Animações suaves e efeito de glow ambiente
-- Layout responsivo em grid
+**3. Ative o ambiente virtual:**
+```bash
+# Windows
+venv\Scripts\activate
 
-### Mapa Interativo (NOVO)
-- Mapa Leaflet com tiles OpenStreetMap
-- Grade de 9 pontos ao redor da cidade buscada
-- Círculos coloridos por condição climática:
-  - 🟡 Amarelo — Limpo / Nublado
-  - 🔵 Azul — Chuva leve / Garoa
-  - 🟣 Roxo — Chuva moderada / Intensa
-  - 🩷 Rosa — Tempestade
-- Popup com temperatura e precipitação em cada ponto
-- Marcador principal animado para a cidade buscada
+# Linux / Mac
+source venv/bin/activate
+```
 
-### Novas métricas
-- Pressão atmosférica
-- Índice UV
-- Visibilidade em km
-- Vento máximo diário no forecast
-- Horário de nascer/pôr do sol
+**4. Instale as dependências:**
+```bash
+pip install -r requirements.txt
+```
 
-### Gráfico de precipitação (NOVO)
-- Barras hourly de precipitação para as próximas 24h
+**5. Inicie o servidor:**
+```bash
+uvicorn main:app --reload
+```
 
-### Código
-- Separação em camadas: `routers/` e `services/`
-- Chamadas paralelas com `asyncio.gather` (mais rápido)
-- Endpoint JSON `/api/weather?city=...` para uso externo
-- Timeout e tratamento de erros por região do mapa
+**6. Acesse no navegador:**
+http://localhost:8000
 
-## 🌐 APIs utilizadas
 
-| API | URL | Custo |
-|-----|-----|-------|
-| Geocoding | geocoding-api.open-meteo.com | Gratuito |
-| Previsão | api.open-meteo.com | Gratuito |
-| Mapa | tile.openstreetmap.org | Gratuito |
+---
 
-Nenhuma chave de API necessária.
+## ✨ Funcionalidades
 
-## 📡 Endpoint JSON
+- 🔍 Busca por qualquer cidade do mundo
+- 🌡️ Temperatura atual e sensação térmica
+- 💧 Umidade relativa do ar
+- 💨 Velocidade do vento
+- 🌧️ Precipitação atual em mm
+- 🌡️ Pressão atmosférica
+- ☀️ Índice UV
+- 👁️ Visibilidade em km
+- 🌅 Horário de nascer e pôr do sol
+- 📅 Previsão detalhada para os próximos 7 dias
+- 📊 Gráfico de precipitação hora a hora (24h)
+- 🗺️ Mapa interativo com condição climática por região
 
+---
+
+## 🗺️ Como funciona o mapa de chuva
+
+Ao buscar uma cidade, o sistema consulta automaticamente 9 pontos geográficos ao redor da localização e exibe círculos coloridos no mapa indicando a condição climática de cada ponto:
+
+| Cor | Condição |
+|-----|----------|
+| 🟡 Amarelo | Céu limpo ou nublado |
+| 🔵 Azul | Garoa ou chuva leve |
+| 🟣 Roxo | Chuva moderada ou intensa |
+| 🩷 Rosa | Tempestade |
+
+Clique em qualquer círculo para ver a temperatura e precipitação daquele ponto.
+
+---
+
+## 📡 API JSON
+
+O projeto expõe um endpoint JSON para uso externo:
+GET /api/weather?city=NomeDaCidade
+
+
+Exemplo:
 ```bash
 curl "http://localhost:8000/api/weather?city=Goiania"
 ```
 
-Retorna JSON completo com temperatura, previsão, dados horários e regiões do mapa.
+---
+
+## 🌐 APIs utilizadas
+
+| Serviço | Endpoint | Custo |
+|---------|----------|-------|
+| Geocoding | geocoding-api.open-meteo.com | Gratuito |
+| Previsão do tempo | api.open-meteo.com | Gratuito |
+| Mapa | tile.openstreetmap.org | Gratuito |
+
+Nenhuma chave de API é necessária.
+
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido como projeto pessoal de estudo em Python e desenvolvimento web.
+
+
