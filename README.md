@@ -17,38 +17,46 @@ Busque qualquer cidade do mundo e visualize temperatura, previsão dos próximos
 ---
 
 ## 📁 Estrutura do projeto
+
+```
 weather_app_v2/
-├── main.py                      # Ponto de entrada da aplicação
-├── requirements.txt             # Dependências do projeto
-├── README.md                    # Documentação
+├── main.py                    # Ponto de entrada da aplicação
+├── requirements.txt           # Dependências do projeto
+├── README.md                  # Documentação
 ├── routers/
-│   └── weather.py               # Rotas HTTP da aplicação
+│   └── weather.py             # Rotas HTTP da aplicação
 ├── services/
-│   └── weather_service.py       # Lógica de negócio e integração com APIs
+│   └── weather_service.py     # Lógica de negócio e integração com APIs
 ├── templates/
-│   └── index.html               # Interface web completa
-└── static/                      # Arquivos estáticos (CSS, JS futuros)
+│   └── index.html             # Interface web completa
+└── static/                    # Arquivos estáticos (CSS, JS futuros)
+```
+
 ---
 
 ## ⚙️ Como executar o projeto
 
 ### Pré-requisitos
+
 - Python 3.10 ou superior instalado
 - Terminal (PowerShell, CMD ou Bash)
 
 ### Passo a passo
 
 **1. Entre na pasta do projeto:**
+
 ```bash
 cd weather_app_v2
 ```
 
 **2. Crie o ambiente virtual:**
+
 ```bash
 python -m venv venv
 ```
 
 **3. Ative o ambiente virtual:**
+
 ```bash
 # Windows
 venv\Scripts\activate
@@ -58,18 +66,22 @@ source venv/bin/activate
 ```
 
 **4. Instale as dependências:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 **5. Inicie o servidor:**
+
 ```bash
 uvicorn main:app --reload
 ```
 
 **6. Acesse no navegador:**
-http://localhost:8000
 
+```
+http://localhost:8000
+```
 
 ---
 
@@ -108,10 +120,13 @@ Clique em qualquer círculo para ver a temperatura e precipitação daquele pont
 ## 📡 API JSON
 
 O projeto expõe um endpoint JSON para uso externo:
-GET /api/weather?city=NomeDaCidade
 
+```
+GET /api/weather?city=NomeDaCidade
+```
 
 Exemplo:
+
 ```bash
 curl "http://localhost:8000/api/weather?city=Goiania"
 ```
@@ -131,7 +146,6 @@ Nenhuma chave de API é necessária.
 ---
 
 ## 👨‍💻 Autor
+Abner Luiz Pascoal de Oliviera
 
 Desenvolvido como projeto pessoal de estudo em Python e desenvolvimento web.
-
-
